@@ -1,0 +1,802 @@
+{
+	"info": {
+		"_postman_id": "395b71b0-739c-49b7-8929-f5b8525a6499",
+		"name": "Schema Registry",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Global API's",
+			"item": [
+				{
+					"name": "Check Global Compatibility Mode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/config",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Global Compatibility Mode",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"compatibility\": \"FULL_TRANSITIVE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/config",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current SR R/W Mode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/mode",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"mode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Current SR R/W Mode",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mode\": \"READONLY\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/mode",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"mode"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Schemas Work",
+			"item": [
+				{
+					"name": "Schema Hard Delete",
+					"item": [
+						{
+							"name": "Just one version",
+							"item": [
+								{
+									"name": "Step 1: Soft Delete a Schema Version",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.schemaregistry.v1+json",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "application/vnd.schemaregistry+json",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://{{host}}/subjects/testsubject/versions/3",
+											"protocol": "http",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"subjects",
+												"testsubject",
+												"versions",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Step 2: Hard Delete a Schema Version",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/vnd.schemaregistry.v1+json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/vnd.schemaregistry+json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "http://{{host}}/subjects/testsubject/versions/3?permanent=true",
+											"protocol": "http",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"subjects",
+												"testsubject",
+												"versions",
+												"3"
+											],
+											"query": [
+												{
+													"key": "permanent",
+													"value": "true"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "All Versions",
+							"item": [
+								{
+									"name": "Step 1: Soft Delete a Subject & all versions in it",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/vnd.schemaregistry.v1+json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/vnd.schemaregistry+json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "http://{{host}}/subjects/testsubject",
+											"protocol": "http",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"subjects",
+												"testsubject"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Step 2: Hard Delete a Subject & all versions in it",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/vnd.schemaregistry.v1+json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/vnd.schemaregistry+json"
+											},
+											{
+												"key": "Accept",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "http://{{host}}/subjects/testsubject?permanent=true",
+											"protocol": "http",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"subjects",
+												"testsubject"
+											],
+											"query": [
+												{
+													"key": "permanent",
+													"value": "true"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Get Schema from Global ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8fa97dbd-1d8b-47ca-a5d7-a8065fb71200",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/schemas/ids/1",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schemas",
+								"ids",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SR New Schema",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry.v1+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"schema\":\n    \"{ \\\"type\\\": \\\"record\\\",\\\"name\\\": \\\"test\\\",\\\"fields\\\":[{\\\"type\\\": \\\"string\\\",\\\"name\\\": \\\"field1\\\"}]}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/subjects/testsubject/versions",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"subjects",
+								"testsubject",
+								"versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SR New Schema 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry.v1+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"schema\":\n    \"{ \\\"type\\\": \\\"record\\\",\\\"name\\\": \\\"test\\\",\\\"fields\\\":[{\\\"type\\\": \\\"string\\\",\\\"name\\\": \\\"field1\\\"}, { \\\"name\\\": \\\"last_name\\\", \\\"type\\\": \\\"string\\\", \\\"doc\\\": \\\"Last Name of Customer\\\", \\\"default\\\": \\\"test\\\"}]}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/subjects/testsubject/versions",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"subjects",
+								"testsubject",
+								"versions"
+							],
+							"query": [
+								{
+									"key": "schema",
+									"value": "{\n     \"type\": \"record\",\n     \"namespace\": \"com.example\",\n     \"name\": \"Customer\",\n     \"version\": \"2\",\n     \"fields\": [\n       { \"name\": \"first_name\", \"type\": \"string\", \"doc\": \"First Name of Customer\" },\n       { \"name\": \"last_name\", \"type\": \"string\", \"doc\": \"Last Name of Customer\" },\n       { \"name\": \"age\", \"type\": \"int\", \"doc\": \"Age at the time of registration\" },\n       { \"name\": \"height\", \"type\": \"float\", \"doc\": \"Height at the time of registration in cm\" },\n       { \"name\": \"weight\", \"type\": \"float\", \"doc\": \"Weight at the time of registration in kg\" },\n       { \"name\": \"phone_number\", \"type\": [\"null\", \"string\"], \"default\": null, \"doc\": \"optional phone number\"},\n       { \"name\": \"email\", \"type\": \"string\", \"default\": \"missing@example.com\", \"doc\": \"email address\"}\n     ]\n}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SR New Canonical Schema Import",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry.v1+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"schema\":\n    \"{\\\"name\\\":\\\"com.example.Customer\\\",\\\"type\\\":\\\"record\\\",\\\"fields\\\":[{\\\"name\\\":\\\"first_name\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"last_name\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"age\\\",\\\"type\\\":\\\"int\\\"},{\\\"name\\\":\\\"height\\\",\\\"type\\\":\\\"float\\\"},{\\\"name\\\":\\\"weight\\\",\\\"type\\\":\\\"float\\\"},{\\\"name\\\":\\\"automated_email\\\",\\\"type\\\":\\\"boolean\\\"}]}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/subjects/canonicalsubject/versions",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"subjects",
+								"canonicalsubject",
+								"versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate if the Schema is already registered",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry.v1+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"schema\":\n    \"{ \\\"type\\\": \\\"record\\\",\\\"name\\\": \\\"test\\\",\\\"fields\\\":[{\\\"type\\\": \\\"string\\\",\\\"name\\\": \\\"field1\\\"}, { \\\"name\\\": \\\"last_name\\\", \\\"type\\\": \\\"string\\\", \\\"doc\\\": \\\"Last Name of Customer\\\", \\\"default\\\": \\\"test\\\"}]}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/subjects/testsubject",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"subjects",
+								"testsubject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Soft Delete a Schema",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry.v1+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{host}}/subjects/testsubject/versions/3",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"subjects",
+								"testsubject",
+								"versions",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Schema 2 with updated comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry.v1+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"schema\":\n    \"{ \\\"type\\\": \\\"record\\\",\\\"name\\\": \\\"test\\\", \\\"fields\\\":[{\\\"type\\\": \\\"string\\\",\\\"name\\\": \\\"field1\\\"}, { \\\"name\\\": \\\"last_name\\\", \\\"type\\\": \\\"string\\\", \\\"doc\\\": \\\"Testing again for Last Name of Customer\\\", \\\"default\\\": \\\"test\\\"}]}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/subjects/testsubject",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"subjects",
+								"testsubject"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Subjects",
+			"item": [
+				{
+					"name": "Get All Subjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/subjects",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Versions in a Subject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/subjects/testsubject/versions",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"subjects",
+								"testsubject",
+								"versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Specific Versions in a Subject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/subjects/testsubject/versions/2",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"subjects",
+								"testsubject",
+								"versions",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Compatibility Mode for a specific Subject",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"compatibility\": \"FULL_TRANSITIVE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/config/canonicalsubject",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"config",
+								"canonicalsubject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Compatibility Mode for a specific Subject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/config/canonicalsubject",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"config",
+								"canonicalsubject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Compatibility with Subject Version",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry.v1+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.schemaregistry+json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"schema\":\n    \"{ \\\"type\\\": \\\"record\\\",\\\"name\\\": \\\"test\\\",\\\"fields\\\":[{\\\"type\\\": \\\"string\\\",\\\"name\\\": \\\"field1\\\"},{\\\"type\\\": \\\"string\\\",\\\"name\\\": \\\"field2\\\", \\\"default\\\":\\\"test\\\"}]}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/compatibility/subjects/testsubject/versions/latest",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"compatibility",
+								"subjects",
+								"testsubject",
+								"versions",
+								"latest"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
